@@ -1,0 +1,49 @@
+services:
+  registry-db:
+    image: postgis/postgis:16-3.4
+    platform: linux/amd64
+    environment:
+      POSTGRES_DB: registry
+      POSTGRES_USER: registry
+      POSTGRES_PASSWORD: ${REGISTRY_DB_PASSWORD:?Set REGISTRY_DB_PASSWORD}
+    volumes:
+      - registry-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U registry -d registry"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  registry-migrate:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.registry
+    env_file: ./backend/.env.registry
+    environment:
+      REGISTRY_DATABASE_URL: postgresql+psycopg://registry:${REGISTRY_DB_PASSWORD}@registry-db:5432/registry
+    command: ["alembic", "-c", "registry-alembic.ini", "upgrade", "head"]
+    depends_on:
+      registry-db:
+        condition: service_healthy
+
+  registry:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.registry
+    env_file: ./backend/.env.registry
+    environment:
+      REGISTRY_DATABASE_URL: postgresql+psycopg://registry:${REGISTRY_DB_PASSWORD}@registry-db:5432/registry
+    ports:
+      - "127.0.0.1:8001:8001"
+    depends_on:
+      registry-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8001/health')"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  registry-postgres:

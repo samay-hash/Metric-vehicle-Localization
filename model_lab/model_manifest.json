@@ -1,0 +1,137 @@
+{
+  "yolo11n.pt": {
+    "path": "models/yolo11n.pt",
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt",
+    "bytes": 5613764,
+    "sha256": "0ebbc80d4a7680d14987a577cd21342b65ecfd94632bd9a8da63ae6417644ee1"
+  },
+  "yolo11s.pt": {
+    "path": "models/yolo11s.pt",
+    "url": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s.pt",
+    "bytes": 19313732,
+    "sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5"
+  },
+  "license-plate-finetune-v1n.pt": {
+    "path": "models/license-plate-finetune-v1n.pt",
+    "url": "https://huggingface.co/morsetechlab/yolov11-license-plate-detection/resolve/251a30d7daedca065f56e04b0af04052c907c68f/license-plate-finetune-v1n.pt",
+    "bytes": 5465235,
+    "sha256": "0aec75976c56eb6f26dfb274c430620ec65137915ff1ae47c3a48c7af8afb7b2",
+    "revision": "251a30d7daedca065f56e04b0af04052c907c68f",
+    "license": "AGPL-3.0",
+    "caveat": "Author reports train/test contamination; Indian CCTV accuracy unvalidated."
+  },
+  "license-plate-finetune-v1n.onnx": {
+    "path": "models/license-plate-finetune-v1n.onnx",
+    "url": "https://huggingface.co/morsetechlab/yolov11-license-plate-detection/resolve/251a30d7daedca065f56e04b0af04052c907c68f/license-plate-finetune-v1n.onnx",
+    "bytes": 10481682,
+    "sha256": "693133a1db97a3ba1e90068986f80afb72c3fcddb681e57181a89a9a3dc351d6",
+    "revision": "251a30d7daedca065f56e04b0af04052c907c68f",
+    "license": "AGPL-3.0",
+    "caveat": "Author reports train/test contamination; Indian CCTV accuracy unvalidated."
+  },
+  "license-plate-finetune-v1s.pt": {
+    "path": "models/license-plate-finetune-v1s.pt",
+    "url": "https://huggingface.co/morsetechlab/yolov11-license-plate-detection/resolve/251a30d7daedca065f56e04b0af04052c907c68f/license-plate-finetune-v1s.pt",
+    "bytes": 19173715,
+    "sha256": "95e50c25ab7066dd0ca5aec18fa80349676db08697780d1149576461174d2381",
+    "revision": "251a30d7daedca065f56e04b0af04052c907c68f",
+    "license": "AGPL-3.0",
+    "caveat": "Author reports train/test contamination; Indian CCTV accuracy unvalidated."
+  },
+  "license-plate-finetune-v1s.onnx": {
+    "path": "models/license-plate-finetune-v1s.onnx",
+    "url": "https://huggingface.co/morsetechlab/yolov11-license-plate-detection/resolve/251a30d7daedca065f56e04b0af04052c907c68f/license-plate-finetune-v1s.onnx",
+    "bytes": 37805310,
+    "sha256": "301e4239442b3a533c868ad1cc2ec38933e75ca53e5c94c58755cff2cfb294b7",
+    "revision": "251a30d7daedca065f56e04b0af04052c907c68f",
+    "license": "AGPL-3.0",
+    "caveat": "Author reports train/test contamination; Indian CCTV accuracy unvalidated."
+  },
+  "veri_sbs_R50-ibn.pth": {
+    "path": "models/veri_sbs_R50-ibn.pth",
+    "url": "https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veri_sbs_R50-ibn.pth",
+    "bytes": 198261759,
+    "sha256": "57fb9c17d88911ea64390bf5427f43511435e7f88f6eed9dbc969d4b611e53cd",
+    "training_dataset": "VeRi",
+    "source": "https://github.com/JDAI-CV/fast-reid/blob/master/MODEL_ZOO.md"
+  },
+  "en_PP-OCRv5_mobile_rec": {
+    "repo": "PaddlePaddle/en_PP-OCRv5_mobile_rec",
+    "revision": "267c36e24c331595590fe7bd72bde2436fd286f2",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "path": "models/en_PP-OCRv5_mobile_rec/config.json",
+        "sha256": "16103ac291a82fca50f0bb000d62a4b8168f6042f03c89c44cf32f241d1eb1f2",
+        "bytes": 10455
+      },
+      {
+        "path": "models/en_PP-OCRv5_mobile_rec/README.md",
+        "sha256": "4c1cfd6e103b0966fe97505b5254cfa35a931d47d7effca97a9db47fb57dd699",
+        "bytes": 6908
+      },
+      {
+        "path": "models/en_PP-OCRv5_mobile_rec/inference.json",
+        "sha256": "fd1b6ec722ea841a72d3ba43e527df1d1066d5d7808e0503ee3eec7265188753",
+        "bytes": 217712
+      },
+      {
+        "path": "models/en_PP-OCRv5_mobile_rec/inference.pdiparams",
+        "sha256": "3ec8a97ed6cefe8568d3e2ee90bb193299b566a7661aa4fd52d224b96b59f66b",
+        "bytes": 7772315
+      },
+      {
+        "path": "models/en_PP-OCRv5_mobile_rec/inference.yml",
+        "sha256": "27e91d0582f40168aa218303c76e184bc78fa7a5d105aad0cfbad8458b441067",
+        "bytes": 3964
+      }
+    ]
+  },
+  "PP-OCRv5_server_rec": {
+    "repo": "PaddlePaddle/PP-OCRv5_server_rec",
+    "revision": "b26c3587fda8da3c8ec0ce357214b4d661ff1558",
+    "license": "Apache-2.0",
+    "files": [
+      {
+        "path": "models/PP-OCRv5_server_rec/config.json",
+        "sha256": "6a780e213d7a830058ae1b6899c62cc13ca9c1f0f04ae39a27ebb2610fae7c51",
+        "bytes": 352253
+      },
+      {
+        "path": "models/PP-OCRv5_server_rec/README.md",
+        "sha256": "519eba1704ddeb8d3e68c4f54221dde11074be0644197cdc4d5581b6d74bd62c",
+        "bytes": 15892
+      },
+      {
+        "path": "models/PP-OCRv5_server_rec/inference.json",
+        "sha256": "8e6e12e5d42531840310977fffb58165bf889fc5061408c5a8afdb6985f47fcb",
+        "bytes": 325204
+      },
+      {
+        "path": "models/PP-OCRv5_server_rec/inference.pdiparams",
+        "sha256": "63853f062a5f4089befc16f565a68277618e0da5cb45468b49d11079de0ada77",
+        "bytes": 84390117
+      },
+      {
+        "path": "models/PP-OCRv5_server_rec/inference.yml",
+        "sha256": "2c719dba044c4e2228aef8ff92f5f575394d75d24c16de096a33b7cfd902f66d",
+        "bytes": 148345
+      }
+    ]
+  },
+  "easyocr": {
+    "source": "https://github.com/JaidedAI/EasyOCR",
+    "files": [
+      {
+        "path": "models/easyocr/craft_mlt_25k.pth",
+        "sha256": "4a5efbfb48b4081100544e75e1e2b57f8de3d84f213004b14b85fd4b3748db17",
+        "bytes": 83152330
+      },
+      {
+        "path": "models/easyocr/english_g2.pth",
+        "sha256": "e2272681d9d67a04e2dff396b6e95077bc19001f8f6d3593c307b9852e1c29e8",
+        "bytes": 15143997
+      }
+    ]
+  }
+}

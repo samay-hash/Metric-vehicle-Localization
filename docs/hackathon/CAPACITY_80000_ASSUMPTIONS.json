@@ -1,0 +1,38 @@
+{
+  "classification": "planning_arithmetic_not_a_benchmark",
+  "assumptions": {
+    "cameras": 80000,
+    "bitrate_mbps": 2.0,
+    "source_fps": 15.0,
+    "analysis_fps": 5.0,
+    "retention_days": 15.0,
+    "ring_seconds": 30.0,
+    "encounters_per_camera_second": 0.1,
+    "metadata_bytes": 2000,
+    "crop_fraction": 0.2,
+    "crop_bytes": 100000,
+    "measured_streams_per_host": null,
+    "measurement_evidence": null,
+    "utilisation": 0.7
+  },
+  "workload": {
+    "video_ingress_mbps": 160000.0,
+    "source_frames_per_second": 1200000.0,
+    "analysis_frames_per_second": 400000.0,
+    "video_tb_per_day_single_copy": 1728.0,
+    "retained_video_tb_single_copy": 25920.0,
+    "encoded_ring_buffer_gb": 600.0,
+    "encounters_per_second": 8000.0,
+    "metadata_mbps": 128.0,
+    "metadata_gb_per_day_raw": 1382.4,
+    "selected_crops_gb_per_day_single_copy": 13824.0
+  },
+  "host_sizing": null,
+  "exclusions": [
+    "video protocol overhead and bandwidth bursts",
+    "WAL, indexes, replication, backups and filesystem overhead",
+    "evidence clips, previews and optional VLM capacity",
+    "regional rounding, standby nodes and fault-domain reserve",
+    "CPU/GPU/decode/model throughput unless explicitly measured"
+  ]
+}

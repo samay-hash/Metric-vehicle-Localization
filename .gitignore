@@ -1,0 +1,9 @@
+node_modules/
+.env
+__pycache__/
+*.pyc
+.DS_Store
+cv_challenge/kaggle_data/
+cv_challenge/samay_samrat_cv_challenge/
+.venv/
+venv/

@@ -1,0 +1,72 @@
+.rbac-login { min-height: 100vh; display: grid; grid-template-columns: 1.05fr .95fr; background: #07130f; color: #edf4ef; font-family: 'Instrument Sans', system-ui, sans-serif; }
+.rbac-login-context { display: flex; flex-direction: column; justify-content: center; padding: clamp(48px, 8vw, 120px); background: radial-gradient(circle at 30% 25%, rgba(52, 112, 79, .28), transparent 34%), linear-gradient(145deg, #07130f, #10231a); }
+.rbac-classification, .rbac-eyebrow { color: #90a99b; font: 700 10px/1.2 ui-monospace, monospace; letter-spacing: .14em; }
+.rbac-login-context > div { display: flex; align-items: center; gap: 12px; margin: 40px 0 70px; letter-spacing: .14em; }
+.rbac-mark { display: grid; width: 46px; height: 46px; place-items: center; border: 1px solid #50705e; color: #a7d4b8; }
+.rbac-login h1 { max-width: 670px; margin: 0; font-size: clamp(45px, 5.5vw, 78px); line-height: .98; letter-spacing: -.055em; }
+.rbac-login-context > p { max-width: 610px; margin: 28px 0 44px; color: #aebdb4; font-size: 15px; line-height: 1.7; }
+.rbac-login-context dl { display: grid; grid-template-columns: repeat(3, 1fr); max-width: 620px; margin: 0; border-top: 1px solid #31473b; }
+.rbac-login-context dl div { padding: 20px 18px 0 0; }
+.rbac-login-context dt { color: #dce9e0; font-size: 18px; font-weight: 700; }
+.rbac-login-context dd { margin: 5px 0 0; color: #82968a; font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.rbac-login-panel { display: grid; place-items: center; padding: 40px; background: #f3f1e9; color: #18241e; }
+.rbac-login-card { width: min(450px, 100%); padding: 42px; border: 1px solid #cfd2c9; background: #fff; box-shadow: 0 24px 70px rgba(18, 36, 27, .12); }
+.rbac-login-card h2 { margin: 10px 0 8px; font-size: 28px; letter-spacing: -.035em; }
+.rbac-login-card > p { margin: 0 0 30px; color: #66736c; font-size: 12px; line-height: 1.6; }
+.rbac-login-card label { display: grid; gap: 7px; margin-top: 17px; color: #35443c; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+.rbac-login-card input { width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid #c7ccc6; background: #fbfcfa; color: #15251d; font: 500 13px/1 system-ui, sans-serif; }
+.rbac-password { display: flex; align-items: center; border: 1px solid #c7ccc6; background: #fbfcfa; padding-left: 12px; }
+.rbac-password input { border: 0; background: transparent; }
+.rbac-password button { display: grid; place-items: center; border: 0; background: transparent; color: #65736b; padding: 10px; }
+.rbac-submit { display: flex; width: 100%; align-items: center; justify-content: space-between; margin-top: 24px; padding: 13px 15px; border: 0; background: #1d5038; color: #fff; font-weight: 800; }
+.rbac-submit:disabled { opacity: .6; }
+.rbac-error { margin-top: 16px; padding: 10px 12px; border-left: 3px solid #a64032; background: #f8e9e5; color: #85382f; font-size: 11px; }
+.rbac-demo { display: grid; gap: 6px; margin-top: 28px; padding-top: 20px; border-top: 1px solid #e0e1db; }
+.rbac-demo > span { margin-bottom: 3px; color: #78837d; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+.rbac-demo button { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border: 0; background: transparent; color: #33433b; text-align: left; }
+.rbac-demo button strong { font-size: 10px; }.rbac-demo button small { color: #7b8580; font-size: 9px; }
+.rbac-state { min-height: 100vh; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 30px; background: #f3f1e9; color: #24342c; text-align: center; }
+.rbac-loader { width: 26px; height: 26px; border: 2px solid #bcc8c0; border-top-color: #24583e; border-radius: 50%; animation: rbac-spin .8s linear infinite; }
+.rbac-state.forbidden span { color: #9b4a39; font: 800 10px/1 ui-monospace, monospace; letter-spacing: .12em; }.rbac-state h1 { max-width: 570px; margin: 0; font-size: 34px; }.rbac-state p { max-width: 520px; margin: 0; color: #65736c; }.rbac-state button { margin-top: 10px; padding: 10px 14px; border: 0; background: #244f39; color: #fff; font-weight: 700; }
+@keyframes rbac-spin { to { transform: rotate(360deg); } }
+.rbac-sidebar-user { display: grid; gap: 3px; margin-bottom: 14px; padding: 10px; border: 1px solid var(--border); background: rgba(128, 128, 128, .06); }.rbac-sidebar-user strong { overflow: hidden; color: var(--text-primary); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }.rbac-sidebar-user span { color: var(--text-muted); font-size: 8px; text-transform: capitalize; }
+.rbac-header-role { display: grid; justify-items: end; gap: 2px; padding-right: 12px; border-right: 1px solid var(--border); }.rbac-header-role strong { color: var(--text-primary); font-size: 10px; }.rbac-header-role span { color: var(--text-muted); font-size: 8px; text-transform: capitalize; }
+/* Keep rows at their content height; the page owns vertical scrolling. */
+.rbac-ops-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: 22px;
+  scrollbar-gutter: stable;
+}
+.rbac-ops-page > *,
+.rbac-access-layout > *,
+.rbac-page-heading > div,
+.rbac-system-grid article > div {
+  min-width: 0;
+}
+.rbac-page-heading button { flex-shrink: 0; }
+.rbac-page-heading p,
+.rbac-page-error,
+.rbac-system-grid p { overflow-wrap: anywhere; }
+.rbac-ops-page,
+.rbac-table-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--text-muted) transparent;
+}
+.rbac-ops-page::-webkit-scrollbar,
+.rbac-table-wrap::-webkit-scrollbar { width: 8px; height: 8px; }
+.rbac-ops-page::-webkit-scrollbar-thumb,
+.rbac-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+.rbac-table-wrap:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+.rbac-page-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }.rbac-page-heading > div > span { color: var(--text-muted); font: 800 9px/1 ui-monospace, monospace; letter-spacing: .12em; }.rbac-page-heading h1 { margin: 7px 0 5px; color: var(--text-primary); font-size: 28px; letter-spacing: -.035em; }.rbac-page-heading p { margin: 0; color: var(--text-muted); font-size: 11px; }.rbac-page-heading button, .rbac-access-form > button { display: inline-flex; align-items: center; gap: 7px; padding: 9px 12px; border: 1px solid var(--border); border-radius: 5px; background: var(--bg-card); color: var(--text-primary); font-size: 10px; font-weight: 700; }.rbac-page-error { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-left: 3px solid #b44b3a; background: rgba(180,75,58,.1); color: #b44b3a; font-size: 11px; }.rbac-metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }.rbac-metric-grid article { display: grid; grid-template-columns: auto 1fr; gap: 5px 10px; min-height: 108px; padding: 16px; border: 1px solid var(--border); border-top: 3px solid #718078; border-radius: 5px; background: var(--bg-card); }.rbac-metric-grid article.good { border-top-color: #3f8a64; }.rbac-metric-grid article.warn { border-top-color: #ac6c32; }.rbac-metric-grid article svg { grid-row: 1 / 3; color: var(--text-muted); }.rbac-metric-grid article span { color: var(--text-muted); font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }.rbac-metric-grid article strong { color: var(--text-primary); font-size: 25px; }.rbac-table-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); }.rbac-table-card > div:first-child { display: flex; align-items: center; justify-content: space-between; padding: 15px 17px; border-bottom: 1px solid var(--border); }.rbac-table-card h2 { margin: 0; color: var(--text-primary); font-size: 14px; }.rbac-table-card > div > span { color: var(--text-muted); font-size: 9px; }.rbac-table-wrap { width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; }.rbac-table-card table { width: 100%; border-collapse: collapse; }.rbac-table-card th, .rbac-table-card td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text-secondary); font-size: 10px; text-align: left; white-space: nowrap; }.rbac-table-card th { color: var(--text-muted); font-size: 8px; text-transform: uppercase; letter-spacing: .07em; }.rbac-table-card td strong, .rbac-table-card td small { display: block; }.rbac-table-card td strong { color: var(--text-primary); }.rbac-table-card td small { margin-top: 3px; color: var(--text-muted); }.rbac-status, .rbac-role { display: inline-flex; align-items: center; gap: 4px; width: fit-content; padding: 4px 7px; border-radius: 20px; background: rgba(118,128,122,.13); color: var(--text-secondary); font-size: 8px; font-weight: 800; text-transform: capitalize; }.rbac-status.healthy { background: rgba(63,138,100,.14); color: #3f8a64; }.rbac-status.unreachable, .rbac-status.auth_failed, .rbac-status.decode_failed { background: rgba(178,67,50,.14); color: #b24332; }.rbac-status.pending, .rbac-status.degraded, .rbac-status.stale { background: rgba(172,108,50,.14); color: #9a622e; }.rbac-system-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }.rbac-system-grid article { display: flex; gap: 14px; padding: 18px; border: 1px solid var(--border); border-radius: 5px; background: var(--bg-card); }.rbac-system-grid svg { color: var(--text-muted); }.rbac-system-grid span, .rbac-system-grid strong { display: block; }.rbac-system-grid span { color: var(--text-muted); font-size: 9px; text-transform: uppercase; }.rbac-system-grid strong { margin-top: 4px; color: var(--text-primary); font-size: 13px; }.rbac-system-grid p { margin: 7px 0 0; color: var(--text-muted); font-size: 10px; line-height: 1.5; }.rbac-access-layout { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 14px; align-items: start; }.rbac-access-form { display: grid; gap: 13px; padding: 18px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); }.rbac-access-form > div { display: flex; align-items: center; gap: 8px; }.rbac-access-form h2 { margin: 0; color: var(--text-primary); font-size: 14px; }.rbac-access-form label { display: grid; gap: 5px; }.rbac-access-form label span { color: var(--text-muted); font-size: 8px; font-weight: 800; text-transform: uppercase; }.rbac-access-form input, .rbac-access-form select { width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg-primary); color: var(--text-primary); font-size: 10px; }.rbac-access-form > button { justify-content: center; background: #24563d; color: #fff; }
+@media (max-width: 1000px) { .rbac-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.rbac-access-layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 650px) { .rbac-page-heading { align-items: flex-start; flex-direction: column; }.rbac-metric-grid, .rbac-system-grid { grid-template-columns: minmax(0, 1fr); }.rbac-header-role { display: none; } }
+@media (max-width: 850px) { .rbac-login { grid-template-columns: 1fr; }.rbac-login-context { padding: 42px 28px; }.rbac-login-context > div { margin: 30px 0 45px; }.rbac-login-context h1 { font-size: 44px; }.rbac-login-panel { padding: 25px 18px; }.rbac-login-card { padding: 30px 24px; } }
+.rbac-table-card h2 { display: flex; align-items: center; gap: 7px; }
+.rbac-table-card td code { display: block; max-width: 390px; overflow: hidden; color: var(--text-muted); font-size: 9px; text-overflow: ellipsis; }
+.rbac-audit-time { display: inline-flex; align-items: center; gap: 5px; }

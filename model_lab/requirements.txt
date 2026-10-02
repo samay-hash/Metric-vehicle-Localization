@@ -1,0 +1,16 @@
+ultralytics==8.4.155
+numpy<2
+opencv-python<4.12
+onnxruntime
+onnx
+paddlepaddle
+paddleocr>=3,<4
+easyocr
+av
+huggingface-hub
+python-dotenv
+lap
+yacs
+gdown
+tabulate
+termcolor

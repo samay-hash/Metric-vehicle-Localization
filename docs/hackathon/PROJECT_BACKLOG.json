@@ -1,0 +1,516 @@
+{
+  "project_title": "SYNETRA — Evaluation Readiness",
+  "repository": "InferiaAI/Synetra",
+  "timezone": "Asia/Kolkata",
+  "internal_build_freeze": "2026-09-20T18:00:00+05:30",
+  "internal_submission_target": "2026-09-21",
+  "official_submission_deadline_observed": "2026-09-28",
+  "hardware": "Local Apple M2, 8 GB unified RAM, 8 CPU/GPU cores; later self-hosted AWS GPU workers after approval, quota and source-access checks",
+  "publishing_status": "Prepared locally; GitHub Project permission required",
+  "items": [
+    {
+      "id": "SYN-00",
+      "title": "Approve and track the final evaluation plan",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-18",
+      "gate": "G0",
+      "workstream": "Delivery",
+      "depends_on": [],
+      "deliverable": "Master plan, architecture, decision gates, benchmark protocol and linked execution cards in the repository Project.",
+      "acceptance": [
+        "Preserve the team's Sep 20/21 internal targets and record the official Sep 28 extension.",
+        "Record laptop/AWS assumptions and unresolved checkpoint/source permissions.",
+        "Link each completed card to real test evidence; do not mark planned work Done."
+      ]
+    },
+    {
+      "id": "SYN-01",
+      "title": "Inventory supplied sources, clocks, coordinates and deployment hardware",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-18",
+      "gate": "G0",
+      "workstream": "Integration",
+      "depends_on": [],
+      "deliverable": "Credential-free source/capability manifest and hardware/network inventory; secrets remain in the secret store.",
+      "acceptance": [
+        "Account for every supplied camera and at least two actual source systems.",
+        "Probe auth, decode, protocol/codec/FPS/resolution, replay/live status and clock basis.",
+        "Identify unknown/approximate coordinates and AWS quota/region/budget/source-access dependencies.",
+        "Export metadata completeness and coverage-gap report; unknown field-of-view is not treated as verified street coverage."
+      ]
+    },
+    {
+      "id": "SYN-02",
+      "title": "Remove fabricated observations, evidence and cloud intelligence dependencies",
+      "priority": "P0",
+      "owner": "Samay",
+      "due": "2026-09-18",
+      "gate": "G0",
+      "workstream": "Analytics",
+      "depends_on": [],
+      "deliverable": "Truthful runtime paths and locally packaged models.",
+      "acceptance": [
+        "No GJ01-XX/TRK plate substitution, seeded operational detections, stock clips or fixed confidence/speed.",
+        "No simulated VLM threat fallback or stop-after-first-event behaviour.",
+        "Block external intelligence/model-download endpoints and demonstrate core inference still runs."
+      ]
+    },
+    {
+      "id": "SYN-03",
+      "title": "Freeze observation, evidence and identity contracts",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-18",
+      "gate": "G0",
+      "workstream": "Platform",
+      "depends_on": [
+        "SYN-01"
+      ],
+      "deliverable": "Versioned schemas and migrations for observations, camera encounters, evidence, watchlists, alerts and audit.",
+      "acceptance": [
+        "Use registry UUID plus stream-session/track identity; no cross-camera track collisions.",
+        "Preserve observed/received timestamps, timing uncertainty, GPS provenance and model revision.",
+        "Stable observation IDs and DB uniqueness constraints support safe redelivery."
+      ]
+    },
+    {
+      "id": "SYN-04",
+      "title": "Validate dedicated plate detection and OCR on held-out feed clips",
+      "priority": "P0",
+      "owner": "Samay",
+      "due": "2026-09-19",
+      "gate": "G1",
+      "workstream": "Analytics",
+      "depends_on": [
+        "SYN-01"
+      ],
+      "deliverable": "Pinned plate-trained YOLO checkpoint, YOLO11n/s comparison and PP-OCRv5/EasyOCR bake-off.",
+      "acceptance": [
+        "First real source-frame to readable-plate result within G0's four-hour gate; checkpoint provenance is mandatory.",
+        "Use original-resolution crops and track-level distinct-frame consensus; preserve unknowns and raw candidates.",
+        "Report exact plate precision/recall, abstention, latency and failure crops with no adjacent-frame leakage."
+      ]
+    },
+    {
+      "id": "SYN-05",
+      "title": "Build the labelled evaluation manifest and acceptance harness",
+      "priority": "P0",
+      "owner": "Shreyas",
+      "due": "2026-09-19",
+      "gate": "G1",
+      "workstream": "QA",
+      "depends_on": [
+        "SYN-01"
+      ],
+      "deliverable": "Authorised footage manifest, held-out labels and real workflow checks.",
+      "acceptance": [
+        "Label full plates, time windows and cross-camera appearances where known; document sample sizes.",
+        "Include unreadable plates, similar vehicles, negative watchlist records, clock resets and repeated passes.",
+        "Keep test fixtures isolated from live data; record clip hashes and sampling policy."
+      ]
+    },
+    {
+      "id": "SYN-06",
+      "title": "Run registry-driven persistent camera workers independently of viewers",
+      "priority": "P0",
+      "owner": "Samay",
+      "due": "2026-09-19",
+      "gate": "G1",
+      "workstream": "Analytics",
+      "depends_on": [
+        "SYN-03",
+        "SYN-04"
+      ],
+      "deliverable": "Persistent multi-camera worker with isolated tracker/OCR state, bounded queues and reconnects.",
+      "acceptance": [
+        "Closing every browser does not stop analytics.",
+        "Camera reconnect/PTS reset creates a new session and never contaminates another camera's state.",
+        "Track actual decoded/analysed FPS and queue age; startup comes from registry assignments."
+      ]
+    },
+    {
+      "id": "SYN-07",
+      "title": "Persist observations and exact-plate watchlist alerts with retry safety",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-19",
+      "gate": "G1",
+      "workstream": "Platform",
+      "depends_on": [
+        "SYN-03"
+      ],
+      "deliverable": "One shared ingest/rules path with PostgreSQL persistence, durable spool/bus and alert outbox.",
+      "acceptance": [
+        "Every confirmed plate from any worker uses the same matcher and journey path.",
+        "Test active/expired/deactivated/scope rules and repeated redelivery without duplicate incidents.",
+        "Restart API/consumer; re-query history and replay undelivered alerts with no loss of committed records.",
+        "A durable HTTP batch-ingest path is the approved deadline fallback if JetStream integration threatens G1; record the actual tested transport."
+      ]
+    },
+    {
+      "id": "SYN-08",
+      "title": "Implement event-time journey reconstruction and genuine evidence retrieval",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-19",
+      "gate": "G1",
+      "workstream": "Investigation",
+      "depends_on": [
+        "SYN-03",
+        "SYN-07"
+      ],
+      "deliverable": "Plate-search API, encounter grouping, late-event handling, location provenance and evidence links.",
+      "acceptance": [
+        "Accept arbitrary input plate without a code change; sort observations by source/event time.",
+        "Repeat visits remain distinct; missing coordinates/evidence get explicit states.",
+        "No physical identity merge on contradictory plate or implausible travel without review."
+      ]
+    },
+    {
+      "id": "SYN-09",
+      "title": "Ship the operator plate-search, route, watchlist and alert workflow",
+      "priority": "P0",
+      "owner": "Shreyas",
+      "due": "2026-09-19",
+      "gate": "G2",
+      "workstream": "UI",
+      "depends_on": [
+        "SYN-07",
+        "SYN-08"
+      ],
+      "deliverable": "Real-data investigation map/timeline, evidence viewer, watchlist CRUD and reconnectable alerts.",
+      "acceptance": [
+        "Each route step opens its actual frame/clip; remove stock footage and static overlays.",
+        "Observed checkpoints and inferred gaps have distinct labels; map tolerates missing GPS.",
+        "Show freshness/latency/error states; use deployment API config instead of hardcoded localhost."
+      ]
+    },
+    {
+      "id": "SYN-10",
+      "title": "Enforce department RBAC across feeds, queries, evidence and notifications",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-19",
+      "gate": "G2",
+      "workstream": "Security",
+      "depends_on": [
+        "SYN-03"
+      ],
+      "deliverable": "Scoped operator/vendor roles, service credentials and access audit.",
+      "acceptance": [
+        "Two department test principals cannot access each other's unauthorised media, events or evidence.",
+        "SSE and model tools enforce the same scope as REST.",
+        "Secrets remain server-side, logs are redacted, TLS verification is enabled and connector destinations approved."
+      ]
+    },
+    {
+      "id": "SYN-11",
+      "title": "Package laptop and AWS GPU deployment with clean-host preflight",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-19",
+      "gate": "G2",
+      "workstream": "Deployment",
+      "depends_on": [
+        "SYN-01",
+        "SYN-06",
+        "SYN-07"
+      ],
+      "deliverable": "Pinned release bundle and laptop/Linux-NVIDIA profiles; approved AWS benchmark host when available.",
+      "acceptance": [
+        "Models/assets run locally with no cloud inference call or automatic download.",
+        "Preflight checks architecture, memory, runtime, clock, storage and source access; no unsupported capacity promise.",
+        "Document actual AWS region/quota/price inputs and retention/backup; no credentials in repo."
+      ]
+    },
+    {
+      "id": "SYN-12",
+      "title": "Measure full-pipeline video load and hardware limits",
+      "priority": "P0",
+      "owner": "Samay",
+      "due": "2026-09-20",
+      "gate": "G3",
+      "workstream": "Performance",
+      "depends_on": [
+        "SYN-05",
+        "SYN-06",
+        "SYN-07",
+        "SYN-11"
+      ],
+      "deliverable": "Live-source matrix and replay tests at increasing concurrency with raw latency/resource data.",
+      "acceptance": [
+        "Separate real/live and repeated-clip tests; record actual source/analysis FPS and codec mix.",
+        "Report highest passing and first failing load, p50/p95/p99, plate recall and dropped frames.",
+        "Complete final-load soak and publish GPU/CPU/RAM/VRAM/decoder/disk/network measurements."
+      ]
+    },
+    {
+      "id": "SYN-13",
+      "title": "Prove metadata replica scaling and publish the 80k capacity model",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-20",
+      "gate": "G3",
+      "workstream": "Performance",
+      "depends_on": [
+        "SYN-07",
+        "SYN-11"
+      ],
+      "deliverable": "80k registry load test, event-rate sweep, 1/2/4 replica comparison and assumption-based hardware/network/storage sizing.",
+      "acceptance": [
+        "Use an isolated synthetic namespace; never present it as 80k real video analytics.",
+        "Record throughput, latency, errors and scaling efficiency with fixed-resource versus added-host tests distinguished.",
+        "Populate GPU count from full-pipeline measurements only; include retention, reserve, fault domains and cost inputs."
+      ]
+    },
+    {
+      "id": "SYN-14",
+      "title": "Execute worker/network/API/DB failure and backup restore drills",
+      "priority": "P0",
+      "owner": "Meet",
+      "due": "2026-09-20",
+      "gate": "G3",
+      "workstream": "Reliability",
+      "depends_on": [
+        "SYN-06",
+        "SYN-07",
+        "SYN-11"
+      ],
+      "deliverable": "Fault log, loss/duplicate accounting, recovery timings and operator runbook.",
+      "acceptance": [
+        "Kill a worker and cut network; durable queued observations replay without duplicate alerts.",
+        "Report gaps in unprocessed video rather than claiming impossible lossless capture.",
+        "Restore a backup on a separate instance; distinguish process restart from actual host failure/HA."
+      ]
+    },
+    {
+      "id": "SYN-15",
+      "title": "Complete clean-machine validation and final submission evidence",
+      "priority": "P0",
+      "owner": "Shreyas",
+      "due": "2026-09-20",
+      "gate": "G4",
+      "workstream": "Delivery",
+      "depends_on": [
+        "SYN-09",
+        "SYN-10",
+        "SYN-11",
+        "SYN-12",
+        "SYN-13",
+        "SYN-14"
+      ],
+      "deliverable": "Tested release, presentation/HLD, own-feed demo, government-feed demo, timestamped report and accessible link checklist.",
+      "acceptance": [
+        "Own-feed video is at most 2–3 min and shows a working backend; government-feed output is separately evidenced.",
+        "Reviewer can enter a plate, open true evidence, see a watchlist hit and verify persisted history.",
+        "Freeze by Sep 20 18:00 IST; verify links/access before the Sep 21 internal submission; no unmeasured claims."
+      ]
+    },
+    {
+      "id": "SYN-16",
+      "title": "Add measured camera health and bounded evidence-crop API",
+      "priority": "P1",
+      "owner": "Meet",
+      "due": "2026-09-20",
+      "gate": "After G2 if P0 on track",
+      "workstream": "Operations",
+      "depends_on": [
+        "SYN-08",
+        "SYN-10"
+      ],
+      "deliverable": "Offline/blackout/blur/freeze diagnosis, fleet health and traceable evidence crops.",
+      "acceptance": [
+        "Test dark night/static scenes and actual outages; expose suspected obstruction with persistence windows.",
+        "Crop by scoped evidence ID and bounded source coordinates with parent hash/provenance.",
+        "If not complete by freeze, omit the demo feature rather than show placeholder results."
+      ]
+    },
+    {
+      "id": "SYN-17",
+      "title": "Add grounded local Qwen incident assistant and typed GenUI",
+      "priority": "P1",
+      "owner": "Shreyas",
+      "due": "2026-09-20",
+      "gate": "After P0 workflow passes",
+      "workstream": "UI",
+      "depends_on": [
+        "SYN-09",
+        "SYN-10",
+        "SYN-21"
+      ],
+      "deliverable": "Qwen3-1.7B Q4 local context answers and allowlisted structured views.",
+      "acceptance": [
+        "Answers cite real event/evidence IDs, abstain on missing facts and cannot execute arbitrary code/SQL.",
+        "Validate 50–100 grounded/unanswerable questions and test metadata prompt injection.",
+        "Core operations work unchanged with the model unavailable; no cloud fallback."
+      ]
+    },
+    {
+      "id": "SYN-18",
+      "title": "Evaluate vehicle-trained ReID and topology-gated candidate routes",
+      "priority": "P1",
+      "owner": "Samay",
+      "due": "2026-09-20",
+      "gate": "After P0 model and load gates",
+      "workstream": "Analytics",
+      "depends_on": [
+        "SYN-05",
+        "SYN-08",
+        "SYN-12"
+      ],
+      "deliverable": "Vehicle-trained FastReID checkpoint validation, bounded per-encounter embeddings and topology-gated candidate associations; alternatives require their own validation.",
+      "acceptance": [
+        "Measure false associations on lookalikes and contradictory plates.",
+        "Time/direction/topology limits prune candidates; low-confidence matches require review.",
+        "Never count appearance-only inference as a confirmed plate sighting; disable on failed validation."
+      ]
+    },
+    {
+      "id": "SYN-19",
+      "title": "Prototype accelerated NVIDIA backend only if parity and speed gates pass",
+      "priority": "P1",
+      "owner": "Samay",
+      "due": "2026-09-20",
+      "gate": "Four-hour spike after portable baseline",
+      "workstream": "Performance",
+      "depends_on": [
+        "SYN-06",
+        "SYN-11"
+      ],
+      "deliverable": "Optional DeepStream/TensorRT FP16 backend with portable event contract.",
+      "acceptance": [
+        "Match original crop coordinates, timestamps, detection output and watchlist semantics.",
+        "Measure full pipeline, not vendor model FPS; retain validated portable backend as fallback.",
+        "Stop the spike after four hours if parity is not proven; no late risky runtime migration."
+      ]
+    },
+    {
+      "id": "SYN-20",
+      "title": "Evaluate optional visual incident explanation after core delivery",
+      "priority": "P2",
+      "owner": "Meet",
+      "due": "2026-09-28",
+      "gate": "After submission; before event only if validated",
+      "workstream": "Roadmap",
+      "depends_on": [
+        "SYN-15"
+      ],
+      "deliverable": "A separately validated local visual-model option for selected incident frames; plate decisions remain in the deterministic vision and rule workflow.",
+      "acceptance": [
+        "Evaluate only selected retained evidence with labeled questions; preserve uncertainty and cite source frames.",
+        "Measure resource and latency impact separately from core ANPR; retain operation with the visual model disabled.",
+        "Zone rules, sharing, plate review and traffic analytics are tracked in their dedicated feature cards."
+      ]
+    },
+    {
+      "id": "SYN-21",
+      "title": "Build contextual incidents and named-recipient investigation sharing",
+      "priority": "P1",
+      "owner": "Meet",
+      "due": null,
+      "gate": "After P0 investigation and access-control gates",
+      "workstream": "Investigation",
+      "depends_on": [
+        "SYN-07",
+        "SYN-08",
+        "SYN-10"
+      ],
+      "deliverable": "Incident context API, evidence-linked conversation records, recipient-specific shares and audited access.",
+      "acceptance": [
+        "Link real alerts, encounters and evidence; normal investigation access remains usable without Qwen.",
+        "Share a selected conversation snapshot by default; explicitly scope any live updates.",
+        "Test unrelated recipients, expiry, revocation and changed department permissions on both context and attachments."
+      ],
+      "status": "Backlog"
+    },
+    {
+      "id": "SYN-22",
+      "title": "Implement sensitive-area geometry schedules and evidence rules",
+      "priority": "P1",
+      "owner": "Meet",
+      "due": null,
+      "gate": "After shared incident context and observed-map gates",
+      "workstream": "Rules",
+      "depends_on": [
+        "SYN-08",
+        "SYN-10",
+        "SYN-21"
+      ],
+      "deliverable": "PostGIS zones, scoped versioned rules, calibrated entry boundaries and incident-linked rule events.",
+      "acceptance": [
+        "Distinguish a sighting at an associated camera from proven crossing of a calibrated zone boundary.",
+        "Test inside/outside/boundary cases, schedule/timezone edges and uncertain location or timing.",
+        "Retry and repeat frames without duplicate rule alerts; preserve rule version and evidence method."
+      ],
+      "status": "Backlog"
+    },
+    {
+      "id": "SYN-23",
+      "title": "Add topology and travel-time constrained route hypotheses",
+      "priority": "P1",
+      "owner": "Meet",
+      "due": null,
+      "gate": "After observed journeys and location inventory are validated",
+      "workstream": "Investigation",
+      "depends_on": [
+        "SYN-01",
+        "SYN-08",
+        "SYN-09"
+      ],
+      "deliverable": "Versioned camera connectivity and route-candidate API with uncertainty-aware map presentation.",
+      "acceptance": [
+        "Validate a known journey, repeated visits, missing GPS and impossible transitions.",
+        "Distinguish observed checkpoints, appearance-based candidates and inferred road geometry.",
+        "Missing road data produces an explicit unknown or schematic connection; never a claimed observed road route."
+      ],
+      "status": "Backlog"
+    },
+    {
+      "id": "SYN-24",
+      "title": "Implement plate-anomaly evidence and review workflow",
+      "priority": "P2",
+      "owner": "Samay",
+      "due": null,
+      "gate": "After core model accuracy and incident evidence gates",
+      "workstream": "Analytics",
+      "depends_on": [
+        "SYN-04",
+        "SYN-05",
+        "SYN-21"
+      ],
+      "deliverable": "Versioned plate assessments and review APIs with original evidence and explicit unknown states.",
+      "acceptance": [
+        "Evaluate readable, unreadable, not-visible, possibly-absent and unusual-format cases on labeled data.",
+        "Require suitable views of the expected plate region before escalating possible absence; detector misses alone do not qualify.",
+        "Report false positives across blur, occlusion, lighting and supported formats; no automatic offence from OCR failure."
+      ],
+      "status": "Backlog"
+    },
+    {
+      "id": "SYN-25",
+      "title": "Implement calibrated traffic density and congestion analytics",
+      "priority": "P2",
+      "owner": "Samay",
+      "due": null,
+      "gate": "After tracking coverage capacity and incident gates",
+      "workstream": "Analytics",
+      "depends_on": [
+        "SYN-05",
+        "SYN-06",
+        "SYN-12",
+        "SYN-21"
+      ],
+      "deliverable": "Lane configuration, line-crossing events, coverage-aware traffic windows and congestion alerts.",
+      "acceptance": [
+        "Count track crossings instead of frame detections; test direction, parked vehicles and tracking resets.",
+        "Compare counts, occupancy and supported queue estimates against manually labeled clips.",
+        "Expose missing coverage and calibration limits; no vehicles-per-kilometre or precise-speed claim without physical calibration and no direct signal actuation."
+      ],
+      "status": "Backlog"
+    }
+  ],
+  "feature_implementation_plan": "BONUS_FEATURE_IMPLEMENTATION_PLAN.md",
+  "new_feature_scheduling": "New feature cards are dependency-gated; dates are unscheduled until the core gates pass."
+}

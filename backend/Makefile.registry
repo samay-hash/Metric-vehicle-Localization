@@ -1,0 +1,71 @@
+SHELL := /bin/bash
+.DEFAULT_GOAL := help
+
+PYTHON ?= python3
+VENV ?= .venv
+PY := $(VENV)/bin/python
+PIP := $(VENV)/bin/pip
+DEPS_STAMP := $(VENV)/.synetra-registry-deps
+ENV_FILE ?= .env.registry
+HOST ?= 127.0.0.1
+PORT ?= 8001
+
+.PHONY: help env install migrate run health-worker bootstrap seed seed-rbac enrich docker-up docker-down docker-logs
+
+help: ## Show the available registry commands.
+	@awk 'BEGIN {FS = ":.*## "; printf "Synetra registry commands:\n"} /^[a-zA-Z0-9_-]+:.*## / {printf "  make %-12s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+env: ## Create .env.registry from the safe example when it is missing.
+	@if [[ -f "$(ENV_FILE)" ]]; then \
+		echo "$(ENV_FILE) already exists"; \
+	else \
+		cp registry.env.example "$(ENV_FILE)"; \
+		chmod 600 "$(ENV_FILE)"; \
+		echo "Created $(ENV_FILE). Add local tokens and connector credentials before running the API."; \
+	fi
+
+$(PY):
+	$(PYTHON) -m venv "$(VENV)"
+
+$(DEPS_STAMP): requirements-registry.txt $(PY)
+	$(PIP) install -r requirements-registry.txt
+	@touch "$(DEPS_STAMP)"
+
+install: $(DEPS_STAMP) ## Install registry dependencies in backend/.venv.
+
+migrate: $(DEPS_STAMP) ## Install when needed, then apply all registry database migrations.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; $(PY) -m alembic -c registry-alembic.ini upgrade head
+
+health-worker: $(DEPS_STAMP) ## Monitor registered RTSP streams independently (requires FFmpeg).
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. exec $(PY) -m registry.health_worker
+
+run: $(DEPS_STAMP) ## Install when needed, then run the registry API on port 8001.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. exec $(PY) -m uvicorn registry_app:app --host "$(HOST)" --port "$(PORT)"
+
+bootstrap: $(DEPS_STAMP) ## Import or refresh the configured Sentinel catalogue through the running API.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. $(PY) scripts/bootstrap_registry.py --url "http://$(HOST):$(PORT)"
+
+seed: $(DEPS_STAMP) ## Create the five local vendor login accounts.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. $(PY) scripts/seed_vendor_accounts.py
+
+seed-rbac: $(DEPS_STAMP) ## Create local dashboard accounts for the four police roles.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. $(PY) scripts/seed_dashboard_accounts.py
+
+enrich: $(DEPS_STAMP) ## Fill missing Sentinel locations and approximate GIS coordinates.
+	@test -f "$(ENV_FILE)" || { echo "Missing $(ENV_FILE); run 'make env' first"; exit 1; }
+	@set -a; source "$(ENV_FILE)"; set +a; PYTHONPATH=. $(PY) scripts/enrich_sentinel_metadata.py
+
+docker-up: ## Build and start PostgreSQL and the registry API with Docker Compose.
+	cd .. && docker compose -f compose.registry.yml up --build -d
+
+docker-down: ## Stop the registry Docker Compose stack.
+	cd .. && docker compose -f compose.registry.yml down
+
+docker-logs: ## Follow registry API logs from Docker Compose.
+	cd .. && docker compose -f compose.registry.yml logs -f registry
